@@ -1,2 +1,3 @@
 import { routes as home } from '@/modules/core/home'
-export default [...home]
+import { routes as auth } from '@/modules/core/auth'
+export default [...home, ...auth]
