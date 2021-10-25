@@ -10,7 +10,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Home,
     meta: {
       title: 'Home',
-      requireAuth: true
+      requiresAuth: true
     }
   },
   {
@@ -19,7 +19,7 @@ const routes: Array<RouteRecordRaw> = [
     component: About,
     meta: {
       title: 'Home',
-      requireAuth: true
+      requiresAuth: true
     }
   },
   {
@@ -27,7 +27,8 @@ const routes: Array<RouteRecordRaw> = [
     name: 'NotFound',
     component: NotFound,
     meta: {
-      title: '404'
+      title: '404',
+      requiresAuth: true
     }
   }
 ]
