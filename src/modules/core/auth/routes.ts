@@ -26,7 +26,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Welcome,
     meta: {
       title: 'Welcome',
-      requireAuth: false
+      requiresAuth: false
     },
     props: (route) => ({ mode: route.params.mode || 'login' }),
     beforeEnter: validateParam
