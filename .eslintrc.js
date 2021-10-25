@@ -12,8 +12,8 @@ module.exports = {
   rules: {
     'no-console': 'off',
     'no-debugger': 'off',
-    'vue/component-name-in-template-casing': 'error',
-    'vue/component-definition-name-casing': ['error', 'PascalCase'],
+    'vue/component-name-in-template-casing': ['error'],
+    'vue/component-definition-name-casing': ['error'],
     'vue/require-prop-types': 'error'
   },
 

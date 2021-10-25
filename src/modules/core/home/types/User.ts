@@ -3,6 +3,7 @@ interface User {
   email: string
   uid: string
   photoURL?: string
+  role: string
 }
 
 export default User
