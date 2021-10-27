@@ -3,6 +3,7 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   updateProfile,
+  UserInfo,
   UserCredential
 } from '@/plugins/firebase'
 import useAuthErrors from './useAuthErrors'
@@ -15,7 +16,7 @@ const { searchError } = useAuthErrors()
 const error = ref<DisplayError>({ error: false })
 const isPending = ref(false)
 
-const signup = async (formData: Auth): Promise<UserCredential | undefined> => {
+const signup = async (formData: Auth): Promise<UserInfo | unknown> => {
   isPending.value = true
   error.value.error = false
   await delay(1)
@@ -29,11 +30,9 @@ const signup = async (formData: Auth): Promise<UserCredential | undefined> => {
     await updateProfile(res.user, { displayName })
     isPending.value = false
     error.value.error = false
-    console.log(res)
-    return res
+    return res.user
   } catch (err: any) {
     isPending.value = false
-    console.log(err.code)
     error.value = {
       error: true,
       msg: searchError(err.code)
@@ -41,7 +40,11 @@ const signup = async (formData: Auth): Promise<UserCredential | undefined> => {
   }
 }
 
-const useSignup = (): any => {
+const useSignup = (): {
+  error: typeof error
+  isPending: typeof isPending
+  signup: typeof signup
+} => {
   return { error, isPending, signup }
 }
 

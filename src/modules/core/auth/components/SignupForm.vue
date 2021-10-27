@@ -24,7 +24,6 @@ export default defineComponent({
 
   setup() {
     const { error, signup, isPending } = useSignup()
-    console.log(typeof useSignup)
     const formData = ref<Auth>({
       email: 'betogarcia@gmail.com',
       password: '123456',

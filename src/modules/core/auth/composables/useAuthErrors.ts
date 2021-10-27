@@ -29,7 +29,7 @@ const searchError = (errorCode: string): string => {
   }
 }
 
-const useAuthErrors = (): any => {
+const useAuthErrors = (): { searchError: typeof searchError } => {
   return { searchError }
 }
 
