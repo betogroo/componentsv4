@@ -16,7 +16,8 @@ export default defineComponent({
 
   setup() {
     const formData = ref<Auth>({
-      email: ''
+      email: '',
+      password: ''
     })
 
     const handleSubmit = () => {

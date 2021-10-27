@@ -8,7 +8,8 @@ import {
   sendEmailVerification,
   sendPasswordResetEmail,
   signOut,
-  onAuthStateChanged
+  onAuthStateChanged,
+  UserCredential
 } from 'firebase/auth'
 
 initializeApp({
@@ -20,8 +21,6 @@ initializeApp({
   appId: process.env.VUE_APP_APP_ID
 })
 
-const fbAuth = getAuth()
-
 export {
   getAuth,
   signInWithEmailAndPassword,
@@ -30,6 +29,6 @@ export {
   sendEmailVerification,
   sendPasswordResetEmail,
   signOut,
-  fbAuth,
-  onAuthStateChanged
+  onAuthStateChanged,
+  UserCredential
 }

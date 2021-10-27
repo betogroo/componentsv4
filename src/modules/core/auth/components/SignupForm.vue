@@ -7,29 +7,36 @@
       <input v-model="formData.passwordConfirm" type="password" />
       <button type="submit">Cadastrar</button>
     </form>
+    <div>
+      <h1 v-if="isPending">...</h1>
+      <h1 v-if="error.error">{{ error.msg }}</h1>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
+import useSignup from '../composables/useSignup'
 import Auth from '../types/Auth'
 
 export default defineComponent({
   name: 'SignupForm',
 
   setup() {
+    const { error, signup, isPending } = useSignup()
+    console.log(typeof useSignup)
     const formData = ref<Auth>({
-      email: '',
-      password: '',
-      passwordConfirm: '',
-      displayName: ''
+      email: 'betogarcia@gmail.com',
+      password: '123456',
+      passwordConfirm: '123456',
+      displayName: 'Beto Garcia'
     })
 
-    const handleSubmit = () => {
-      console.log(formData.value)
+    const handleSubmit = async () => {
+      await signup(formData.value)
     }
 
-    return { formData, handleSubmit }
+    return { formData, handleSubmit, error, signup, isPending }
   }
 })
 </script>
