@@ -6,6 +6,7 @@ import NotFound from './views/NotFound.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
+    alias: '/home',
     name: 'Home',
     component: Home,
     meta: {
@@ -18,8 +19,8 @@ const routes: Array<RouteRecordRaw> = [
     name: 'About',
     component: About,
     meta: {
-      title: 'Home',
-      requiresAuth: true
+      title: 'About',
+      requiresAuth: false
     }
   },
   {
@@ -28,7 +29,7 @@ const routes: Array<RouteRecordRaw> = [
     component: NotFound,
     meta: {
       title: '404',
-      requiresAuth: true
+      requiresAuth: false
     }
   }
 ]

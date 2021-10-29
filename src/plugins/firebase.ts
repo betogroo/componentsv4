@@ -9,7 +9,6 @@ import {
   sendPasswordResetEmail,
   signOut,
   onAuthStateChanged,
-  UserCredential,
   UserInfo
 } from 'firebase/auth'
 
@@ -31,6 +30,5 @@ export {
   sendPasswordResetEmail,
   signOut,
   onAuthStateChanged,
-  UserCredential,
   UserInfo
 }

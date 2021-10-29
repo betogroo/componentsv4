@@ -2,9 +2,7 @@
   <div>
     <h1>Forms</h1>
     <LoginForm v-if="mode === 'login'" />
-    <hr />
     <SignupForm v-if="mode === 'signup'" />
-    <hr />
     <ResetPasswordForm v-if="mode === 'reset'" />
   </div>
 </template>

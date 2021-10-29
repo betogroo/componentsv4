@@ -1,42 +1,41 @@
 import { ref } from 'vue'
+import useAuthErrors from './useAuthErrors'
 import {
   getAuth,
   createUserWithEmailAndPassword,
   updateProfile,
-  UserInfo,
-  UserCredential
+  UserInfo
 } from '@/plugins/firebase'
-import useAuthErrors from './useAuthErrors'
-import useUtils from '@/composables/useUtils'
-import { Error as DisplayError } from '../types/Error'
+import { NotificationError } from '@/types/NotificationError'
 import Auth from '../types/Auth'
 
-const { delay } = useUtils()
 const { searchError } = useAuthErrors()
-const error = ref<DisplayError>({ error: false })
+const error = ref<NotificationError>({ error: false })
 const isPending = ref(false)
 
 const signup = async (formData: Auth): Promise<UserInfo | unknown> => {
   isPending.value = true
   error.value.error = false
-  await delay(1)
   const { email, password, displayName } = formData
   const auth = getAuth()
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password)
     if (!res) {
-      throw 'Erro'
+      throw new Error('Erro')
     }
     await updateProfile(res.user, { displayName })
     isPending.value = false
     error.value.error = false
     return res.user
   } catch (err: any) {
+    console.log(err)
     isPending.value = false
     error.value = {
       error: true,
       msg: searchError(err.code)
     }
+  } finally {
+    isPending.value = false
   }
 }
 

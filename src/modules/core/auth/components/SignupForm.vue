@@ -6,6 +6,16 @@
       <input v-model="formData.password" type="password" />
       <input v-model="formData.passwordConfirm" type="password" />
       <button type="submit">Cadastrar</button>
+      <AuthFormLink
+        text="Já é cadastrado?"
+        textLink="Faça login"
+        :to="{ name: 'Welcome', params: { mode: 'login' } }"
+      />
+      <AuthFormLink
+        text="Esqueceu a senha?"
+        textLink="Redefina"
+        :to="{ name: 'Welcome', params: { mode: 'reset' } }"
+      />
     </form>
     <div>
       <h1 v-if="isPending">...</h1>
@@ -16,11 +26,16 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
+import AuthFormLink from './AuthFormLink.vue'
 import useSignup from '../composables/useSignup'
 import Auth from '../types/Auth'
 
 export default defineComponent({
   name: 'SignupForm',
+
+  components: {
+    AuthFormLink
+  },
 
   setup() {
     const { error, signup, isPending } = useSignup()
