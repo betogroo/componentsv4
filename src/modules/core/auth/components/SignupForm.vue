@@ -26,6 +26,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import AuthFormLink from './AuthFormLink.vue'
 import useSignup from '../composables/useSignup'
 import Auth from '../types/Auth'
@@ -38,6 +39,7 @@ export default defineComponent({
   },
 
   setup() {
+    const router = useRouter()
     const { error, signup, isPending } = useSignup()
     const formData = ref<Auth>({
       email: 'betogarcia@gmail.com',
@@ -48,6 +50,9 @@ export default defineComponent({
 
     const handleSubmit = async () => {
       await signup(formData.value)
+      if (!error.value.error) {
+        router.push({ name: 'Profile' })
+      }
     }
 
     return { formData, handleSubmit, error, signup, isPending }

@@ -25,7 +25,7 @@ const signup = async (formData: Auth): Promise<UserInfo | unknown> => {
     }
     await updateProfile(res.user, { displayName })
     isPending.value = false
-    error.value.error = false
+    error.value = { error: false, msg: 'Cadastro efetuado.' }
     return res.user
   } catch (err: any) {
     console.log(err)
