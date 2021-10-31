@@ -4,6 +4,7 @@ import {
   RouteLocationNormalized
 } from 'vue-router'
 import Welcome from './views/Welcome.vue'
+import Profile from './views/Profile.vue'
 
 const validateParam = (
   to: RouteLocationNormalized,
@@ -30,6 +31,15 @@ const routes: Array<RouteRecordRaw> = [
     },
     props: (route) => ({ mode: route.params.mode || 'login' }),
     beforeEnter: validateParam
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile,
+    meta: {
+      requiresAuth: true,
+      title: 'Profile'
+    }
   }
 ]
 
