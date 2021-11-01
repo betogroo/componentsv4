@@ -1,6 +1,6 @@
 //import { fbAuth } from '@/plugins/firebase'
 import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
-import { getAuth } from '@/plugins/firebase'
+// import { getAuth } from '@/plugins/firebase'
 
 export default (
   to: RouteLocationNormalized,
@@ -8,9 +8,8 @@ export default (
   next: NavigationGuardNext
 ): void => {
   //const user = { displayName: 'Beto', uid: 'sadaduiyad789ad789a' }
-  const user = getAuth().currentUser
-  console.log(user)
-  console.log(to.meta)
+  // const user = getAuth().currentUser
+  const user = null
 
   // if (to.name !== 'Welcome' && !user) {
   if (to.meta.requiresAuth && !user) {

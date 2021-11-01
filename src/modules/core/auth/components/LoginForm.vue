@@ -15,10 +15,15 @@
         :to="{ name: 'Welcome', params: { mode: 'reset' } }"
       />
     </form>
+    <div>
+      <h1 v-if="isPending">Carregando...</h1>
+      <h1 v-if="error.error">{{ error.msg }}</h1>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
+import useLogin from '../composables/useLogin'
 import { defineComponent, ref } from 'vue'
 import AuthFormLink from './AuthFormLink.vue'
 import Auth from '../types/Auth'
@@ -30,14 +35,15 @@ export default defineComponent({
     AuthFormLink
   },
   setup() {
+    const { error, isPending, login } = useLogin()
     const formData = ref<Auth>({
-      email: '',
-      password: ''
+      email: 'betogroo@beto.com',
+      password: '123456'
     })
-    const handleSubmit = () => {
-      console.log(formData.value)
+    const handleSubmit = async () => {
+      await login(formData.value)
     }
-    return { formData, handleSubmit }
+    return { formData, handleSubmit, error, isPending }
   }
 })
 </script>

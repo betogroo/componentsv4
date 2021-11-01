@@ -18,7 +18,7 @@
       />
     </form>
     <div>
-      <h1 v-if="isPending">...</h1>
+      <h1 v-if="isPending">Carregando...</h1>
       <h1 v-if="error.error">{{ error.msg }}</h1>
     </div>
   </div>
