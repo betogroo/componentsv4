@@ -18,20 +18,22 @@ const reset = async (formData: Auth): Promise<void> => {
     await sendPasswordResetEmail(auth, email)
     isPending.value = false
     error.value = {
-      error: false,
-      msg: 'Logado'
+      error: true,
+      msg: 'Foi enviado um email com o link para a redefinição',
+      type: 'success'
     }
   } catch (err: any) {
-    console.log(err.code)
     isPending.value = false
     error.value = {
       error: true,
-      msg: searchError(err.code)
+      msg: searchError(err.code),
+      type: 'error'
     }
+    console.log(error.value)
   }
 }
 
-const useLogin = (): {
+const useResetPassword = (): {
   error: typeof error
   isPending: typeof isPending
   reset: typeof reset
@@ -39,4 +41,4 @@ const useLogin = (): {
   return { error, isPending, reset }
 }
 
-export default useLogin
+export default useResetPassword

@@ -34,7 +34,8 @@ const login = async (formData: Auth): Promise<UserInfo | unknown> => {
     isPending.value = false
     error.value = {
       error: true,
-      msg: searchError(err.code)
+      msg: searchError(err.code),
+      type: 'success'
     }
   }
 }

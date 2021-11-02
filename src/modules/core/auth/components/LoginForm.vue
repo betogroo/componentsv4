@@ -17,7 +17,12 @@
     </form>
     <div>
       <h1 v-if="isPending">Carregando...</h1>
-      <h5 class="error" v-if="error.error">{{ error.msg }}</h5>
+      <h5 class="error" v-if="error.error">{{ error.msg }} - - -</h5>
+      <DefaultNotification
+        :isActive="error.error"
+        :type="error.type"
+        :text="error.msg"
+      />
     </div>
   </div>
 </template>
@@ -25,6 +30,7 @@
 <script lang="ts">
 import useLogin from '../composables/useLogin'
 import { defineComponent, ref } from 'vue'
+import DefaultNotification from '@/components/layout/notification/DefaultNotification.vue'
 import AuthFormLink from './AuthFormLink.vue'
 import Auth from '../types/Auth'
 
@@ -32,7 +38,8 @@ export default defineComponent({
   name: 'LoginForm',
 
   components: {
-    AuthFormLink
+    AuthFormLink,
+    DefaultNotification
   },
   setup() {
     const { error, isPending, login } = useLogin()
@@ -50,9 +57,3 @@ export default defineComponent({
   }
 })
 </script>
-
-<style scoped>
-.error {
-  color: red;
-}
-</style>

@@ -19,7 +19,11 @@
     </form>
     <div>
       <h1 v-if="isPending">Carregando...</h1>
-      <h1 v-if="error.error">{{ error.msg }}</h1>
+      <DefaultNotification
+        :isActive="error.error"
+        :text="error.msg"
+        :type="error.type"
+      />
     </div>
   </div>
 </template>
@@ -27,15 +31,17 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import AuthFormLink from './AuthFormLink.vue'
 import useSignup from '../composables/useSignup'
+import DefaultNotification from '@/components/layout/notification/DefaultNotification.vue'
+import AuthFormLink from './AuthFormLink.vue'
 import Auth from '../types/Auth'
 
 export default defineComponent({
   name: 'SignupForm',
 
   components: {
-    AuthFormLink
+    AuthFormLink,
+    DefaultNotification
   },
 
   setup() {
