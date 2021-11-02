@@ -10,7 +10,7 @@
       />
     </form>
     <div>
-      <h1 v-if="isPending">Carregando...</h1>
+      <DefaultLoading v-if="isPending" />
       <DefaultNotification
         :isActive="error.error"
         :text="error.msg"
@@ -24,6 +24,7 @@
 import { defineComponent, ref } from 'vue'
 import userResetPassword from '../composables/useResetPassword'
 import DefaultNotification from '@/components/layout/notification/DefaultNotification.vue'
+import DefaultLoading from '@/components/layout/loading/DefaultLoading.vue'
 import AuthFormLink from './AuthFormLink.vue'
 import Auth from '../types/Auth'
 
@@ -32,7 +33,8 @@ export default defineComponent({
 
   components: {
     AuthFormLink,
-    DefaultNotification
+    DefaultNotification,
+    DefaultLoading
   },
 
   setup() {
