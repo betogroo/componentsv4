@@ -17,7 +17,7 @@
     </form>
     <div>
       <h1 v-if="isPending">Carregando...</h1>
-      <h1 v-if="error.error">{{ error.msg }}</h1>
+      <h5 class="error" v-if="error.error">{{ error.msg }}</h5>
     </div>
   </div>
 </template>
@@ -40,12 +40,19 @@ export default defineComponent({
       email: 'betogroo@beto.com',
       password: '123456'
     })
-    const handleSubmit = async () => {
+    const handleSubmit = async (): Promise<void> => {
       await login(formData.value)
+      if (!error.value.error) {
+        console.log('user logged')
+      }
     }
     return { formData, handleSubmit, error, isPending }
   }
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.error {
+  color: red;
+}
+</style>

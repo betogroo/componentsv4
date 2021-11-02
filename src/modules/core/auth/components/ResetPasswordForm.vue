@@ -14,6 +14,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
+import userResetPassword from '../composables/useResetPassword'
 import AuthFormLink from './AuthFormLink.vue'
 import Auth from '../types/Auth'
 
@@ -25,13 +26,14 @@ export default defineComponent({
   },
 
   setup() {
+    const { error, isPending, reset } = userResetPassword()
     const formData = ref<Auth>({
-      email: '',
+      email: 'beto@beto.com',
       password: ''
     })
 
-    const handleSubmit = () => {
-      console.log(formData.value)
+    const handleSubmit = async () => {
+      await reset(formData.value)
     }
 
     return { formData, handleSubmit }

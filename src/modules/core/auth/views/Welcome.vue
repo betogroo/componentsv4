@@ -4,6 +4,10 @@
     <LoginForm v-if="mode === 'login'" />
     <SignupForm v-if="mode === 'signup'" />
     <ResetPasswordForm v-if="mode === 'reset'" />
+    <div>
+      <h1>Carregando2...</h1>
+      <h5>Deu pau</h5>
+    </div>
   </div>
 </template>
 
