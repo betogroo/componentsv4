@@ -22,6 +22,8 @@ const searchError = (errorCode: string): string => {
       return 'Informe como quer ser chamado'
     case 'auth/generic-signup-error':
       return 'Não foi possível se cadastrar. Tente novamente em alguns segundos.'
+    case 'auth/too-many-requests':
+      return 'Tentativas de redefinição de senha excedidas. Tente mais tarde'
     case 'auth/generic-login-error':
       return 'Não foi possível conectar-se. Tente novamente em alguns segundos.'
     default:
