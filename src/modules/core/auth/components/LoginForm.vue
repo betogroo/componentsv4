@@ -18,7 +18,7 @@
     <div>
       <DefaultLoading v-if="isPending" />
       <DefaultNotification
-        :isActive="error.error"
+        :isActive="error.isActive"
         :type="error.type"
         :text="error.msg"
       />
@@ -50,7 +50,7 @@ export default defineComponent({
     })
     const handleSubmit = async (): Promise<void> => {
       await login(formData.value)
-      if (!error.value.error) {
+      if (error.value.type === 'success') {
         console.log('user logged')
       }
     }

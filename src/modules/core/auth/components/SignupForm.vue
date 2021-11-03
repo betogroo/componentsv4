@@ -19,11 +19,7 @@
     </form>
     <div>
       <DefaultLoading v-if="isPending" />
-      <DefaultNotification
-        :isActive="error.error"
-        :text="error.msg"
-        :type="error.type"
-      />
+      <DefaultNotification :text="error.msg" :type="error.type" />
     </div>
   </div>
 </template>
@@ -58,8 +54,8 @@ export default defineComponent({
 
     const handleSubmit = async () => {
       await signup(formData.value)
-
-      router.push({ name: 'Profile' })
+      console.log(error.value)
+      // router.push({ name: 'Profile' })
     }
 
     return { formData, handleSubmit, error, signup, isPending }

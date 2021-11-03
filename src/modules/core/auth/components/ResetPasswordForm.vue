@@ -11,11 +11,7 @@
     </form>
     <div>
       <DefaultLoading v-if="isPending" />
-      <DefaultNotification
-        :isActive="error.error"
-        :text="error.msg"
-        :type="error.type"
-      />
+      <DefaultNotification :text="error.msg" :type="error.type" />
     </div>
   </div>
 </template>

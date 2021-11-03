@@ -7,20 +7,18 @@ import { defineProps, withDefaults } from 'vue'
 interface Props {
   type?: string
   text?: string
-  isActive?: boolean
+  // isActive?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   type: 'primary',
-  text: '',
-  isActive: false
+  text: ''
+  // isActive: false
 })
-
-console.log(props)
 </script>
 
 <template>
-  <div v-if="isActive" :class="type">{{ text }}</div>
+  <div :class="type">{{ text }}</div>
 </template>
 <style lang="scss" scoped>
 .error {

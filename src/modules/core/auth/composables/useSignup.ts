@@ -7,17 +7,17 @@ import {
   updateProfile,
   UserInfo
 } from '@/plugins/firebase'
-import { NotificationError } from '@/types/NotificationError'
+import { Notification } from '@/types/Notification'
 import Auth from '../types/Auth'
-
+const { setError, delay, resetNotification } = useUtils()
 const { searchError } = useAuthErrors()
-const error = ref<NotificationError>({ error: false })
+const error = ref<Notification>(resetNotification())
 const isPending = ref(false)
 
 const signup = async (formData: Auth): Promise<UserInfo | unknown> => {
   const { setError, delay } = useUtils()
   isPending.value = true
-  error.value.error = false
+  error.value = resetNotification()
   const { email, password, displayName } = formData
   const auth = getAuth()
   try {
@@ -27,13 +27,16 @@ const signup = async (formData: Auth): Promise<UserInfo | unknown> => {
     }
     await updateProfile(res.user, { displayName })
     isPending.value = false
-    error.value = setError(true, 'success', 'Cadastro efetuado com sucesso')
+    error.value = setError('success', 'Cadastro efetuado com sucesso')
     await delay(2000)
+    error.value = resetNotification()
     return res.user
   } catch (err: any) {
-    console.log(err)
+    console.log(err.code)
     isPending.value = false
-    error.value = setError(true, 'error', searchError(err.code))
+    error.value = setError('error', searchError(err.code))
+    await delay(2000)
+    error.value = resetNotification()
   } finally {
     isPending.value = false
   }
