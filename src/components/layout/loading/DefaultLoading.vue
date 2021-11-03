@@ -26,7 +26,7 @@ export default defineComponent({
   position: absolute;
   left: 8px;
   width: 16px;
-  background: red;
+  background: blueviolet;
   animation: load 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
 }
 .load div:nth-child(1) {
