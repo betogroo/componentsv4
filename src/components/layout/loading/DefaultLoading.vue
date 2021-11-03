@@ -1,8 +1,6 @@
 <template>
   <div class="load">
-    <div></div>
-    <div></div>
-    <div></div>
+    <div v-for="i in 4" :key="i"></div>
   </div>
 </template>
 
@@ -14,7 +12,7 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .load {
   display: inline-block;
   position: relative;
@@ -25,31 +23,48 @@ export default defineComponent({
   display: inline-block;
   position: absolute;
   left: 8px;
-  width: 16px;
-  background: blueviolet;
-  animation: load 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+  width: 8px;
+  height: 8px;
+  border: 1px solid black;
+  border-radius: 50%;
+  background: white;
+  animation: load 1.5s cubic-bezier(0, 0.5, 0.5, 1) infinite;
 }
-.load div:nth-child(1) {
-  left: 8px;
-  animation-delay: -0.24s;
+$pos: 4;
+$delay: 0;
+$step: 12;
+@for $i from 1 through 4 {
+  .load div:nth-child(#{$i}) {
+    left: #{$pos}px;
+    animation-delay: #{$delay/100 * -1}s;
+  }
+  $pos: $pos + $step;
+  $delay: $delay - $step;
+}
+/* .load div:nth-child(1) {
+  left: 4px;
+  animation-delay: -0.36s;
 }
 .load div:nth-child(2) {
-  left: 32px;
-  animation-delay: -0.12s;
+  left: 16px;
+  animation-delay: -0.24s;
 }
 .load div:nth-child(3) {
-  left: 56px;
-  animation-delay: 0;
+  left: 28px;
+  animation-delay: -0.12s;
 }
+.load div:nth-child(4) {
+  left: 40px;
+  animation-delay: 0;
+} */
 @keyframes load {
   0% {
-    top: 8px;
-    height: 64px;
+    background: red;
   }
+
   50%,
   100% {
-    top: 24px;
-    height: 32px;
+    background: white;
   }
 }
 </style>
