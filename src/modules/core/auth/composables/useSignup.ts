@@ -1,5 +1,6 @@
 import { ref } from 'vue'
 import useAuthErrors from './useAuthErrors'
+import useUtils from '@/composables/useUtils'
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -14,6 +15,7 @@ const error = ref<NotificationError>({ error: false })
 const isPending = ref(false)
 
 const signup = async (formData: Auth): Promise<UserInfo | unknown> => {
+  const { setError, delay } = useUtils()
   isPending.value = true
   error.value.error = false
   const { email, password, displayName } = formData
@@ -21,20 +23,17 @@ const signup = async (formData: Auth): Promise<UserInfo | unknown> => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password)
     if (!res) {
-      throw new Error('Erro')
+      throw 'Erro'
     }
     await updateProfile(res.user, { displayName })
     isPending.value = false
-    error.value = { error: false, msg: 'Cadastro efetuado.' }
+    error.value = setError(true, 'success', 'Cadastro efetuado com sucesso')
+    await delay(2000)
     return res.user
   } catch (err: any) {
     console.log(err)
     isPending.value = false
-    error.value = {
-      error: true,
-      msg: searchError(err.code),
-      type: 'error'
-    }
+    error.value = setError(true, 'error', searchError(err.code))
   } finally {
     isPending.value = false
   }

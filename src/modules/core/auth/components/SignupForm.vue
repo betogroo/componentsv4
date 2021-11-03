@@ -58,9 +58,8 @@ export default defineComponent({
 
     const handleSubmit = async () => {
       await signup(formData.value)
-      if (!error.value.error) {
-        router.push({ name: 'Profile' })
-      }
+
+      router.push({ name: 'Profile' })
     }
 
     return { formData, handleSubmit, error, signup, isPending }
