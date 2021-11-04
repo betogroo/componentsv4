@@ -3,16 +3,19 @@ import useAuthErrors from './useAuthErrors'
 import useUtils from '@/composables/useUtils'
 import { getAuth, sendPasswordResetEmail } from '@/plugins/firebase'
 import { Notification } from '@/types/Notification'
-import Auth from '../types/Auth'
+import { Auth } from '../types/Auth'
 
 const { searchError } = useAuthErrors()
-const { delay, setError, resetNotification } = useUtils()
-const error = ref<Notification>(resetNotification())
+const { delay, setNotification, resetNotification } = useUtils()
+
+const error = ref<boolean | null>(null)
+const notification = ref<Notification>(resetNotification())
 const isPending = ref(false)
 
 const reset = async (formData: Auth): Promise<void> => {
   isPending.value = true
-  error.value = resetNotification()
+  error.value = null
+  notification.value = resetNotification()
   const { email } = formData
   const auth = getAuth()
 
@@ -20,26 +23,31 @@ const reset = async (formData: Auth): Promise<void> => {
     await delay(2000)
     await sendPasswordResetEmail(auth, email)
     isPending.value = false
-    error.value = setError(
+    notification.value = setNotification(
       'success',
       'Foi enviado um email com o link para a redefinição'
     )
+    await delay(2000)
+    notification.value = resetNotification()
+    error.value = false
   } catch (err: any) {
     console.log(err.code)
     isPending.value = false
-    error.value = setError('error', searchError(err.code))
+    notification.value = setNotification('error', searchError(err.code))
     await delay(2000)
+    error.value = true
     console.log(err.code)
-    error.value = resetNotification()
+    notification.value = resetNotification()
   }
 }
 
 const useResetPassword = (): {
   error: typeof error
+  notification: typeof notification
   isPending: typeof isPending
   reset: typeof reset
 } => {
-  return { error, isPending, reset }
+  return { error, notification, isPending, reset }
 }
 
 export default useResetPassword

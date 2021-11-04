@@ -37,7 +37,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Profile',
     component: Profile,
     meta: {
-      requiresAuth: true,
+      requiresAuth: false,
       title: 'Profile'
     }
   }

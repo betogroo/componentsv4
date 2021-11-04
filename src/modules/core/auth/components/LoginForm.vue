@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{ error }}
     <form @submit.prevent="handleSubmit">
       <input type="email" v-model="formData.email" />
       <input type="password" v-model="formData.password" />
@@ -17,11 +18,7 @@
     </form>
     <div>
       <DefaultLoading v-if="isPending" />
-      <DefaultNotification
-        :isActive="error.isActive"
-        :type="error.type"
-        :text="error.msg"
-      />
+      <DefaultNotification :type="notification.type" :text="notification.msg" />
     </div>
   </div>
 </template>
@@ -32,7 +29,7 @@ import { defineComponent, ref } from 'vue'
 import DefaultNotification from '@/components/layout/notification/DefaultNotification.vue'
 import DefaultLoading from '@/components/layout/loading/DefaultLoading.vue'
 import AuthFormLink from './AuthFormLink.vue'
-import Auth from '../types/Auth'
+import { Auth } from '../types/Auth'
 
 export default defineComponent({
   name: 'LoginForm',
@@ -43,18 +40,18 @@ export default defineComponent({
     DefaultLoading
   },
   setup() {
-    const { error, isPending, login } = useLogin()
+    const { error, notification, isPending, login } = useLogin()
     const formData = ref<Auth>({
       email: 'betogroo@beto.com',
       password: '123456'
     })
     const handleSubmit = async (): Promise<void> => {
       await login(formData.value)
-      if (error.value.type === 'success') {
+      if (!error.value) {
         console.log('user logged')
       }
     }
-    return { formData, handleSubmit, error, isPending }
+    return { formData, handleSubmit, error, notification, isPending }
   }
 })
 </script>

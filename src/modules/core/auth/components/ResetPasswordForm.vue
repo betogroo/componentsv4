@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{ error }}
     <form @submit.prevent="handleSubmit">
       <input v-model="formData.email" type="email" />
       <button type="submit">Redefinir</button>
@@ -11,7 +12,7 @@
     </form>
     <div>
       <DefaultLoading v-if="isPending" />
-      <DefaultNotification :text="error.msg" :type="error.type" />
+      <DefaultNotification :text="notification.msg" :type="notification.type" />
     </div>
   </div>
 </template>
@@ -22,7 +23,7 @@ import userResetPassword from '../composables/useResetPassword'
 import DefaultNotification from '@/components/layout/notification/DefaultNotification.vue'
 import DefaultLoading from '@/components/layout/loading/DefaultLoading.vue'
 import AuthFormLink from './AuthFormLink.vue'
-import Auth from '../types/Auth'
+import { Auth } from '../types/Auth'
 
 export default defineComponent({
   name: 'ResetPasswordForm',
@@ -34,7 +35,7 @@ export default defineComponent({
   },
 
   setup() {
-    const { error, isPending, reset } = userResetPassword()
+    const { error, notification, isPending, reset } = userResetPassword()
     const formData = ref<Auth>({
       email: 'beto@beto.com',
       password: ''
@@ -44,7 +45,7 @@ export default defineComponent({
       await reset(formData.value)
     }
 
-    return { formData, handleSubmit, error, isPending }
+    return { formData, handleSubmit, error, notification, isPending }
   }
 })
 </script>

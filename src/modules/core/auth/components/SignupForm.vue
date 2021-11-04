@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{ error }}
     <form @submit.prevent="handleSubmit">
       <input v-model="formData.displayName" type="text" />
       <input v-model="formData.email" type="email" />
@@ -19,7 +20,7 @@
     </form>
     <div>
       <DefaultLoading v-if="isPending" />
-      <DefaultNotification :text="error.msg" :type="error.type" />
+      <DefaultNotification :text="notification.msg" :type="notification.type" />
     </div>
   </div>
 </template>
@@ -31,7 +32,7 @@ import useSignup from '../composables/useSignup'
 import DefaultNotification from '@/components/layout/notification/DefaultNotification.vue'
 import DefaultLoading from '@/components/layout/loading/DefaultLoading.vue'
 import AuthFormLink from './AuthFormLink.vue'
-import Auth from '../types/Auth'
+import { Auth } from '../types/Auth'
 
 export default defineComponent({
   name: 'SignupForm',
@@ -44,7 +45,7 @@ export default defineComponent({
 
   setup() {
     const router = useRouter()
-    const { error, signup, isPending } = useSignup()
+    const { error, notification, signup, isPending } = useSignup()
     const formData = ref<Auth>({
       email: 'betogarcia@gmail.com',
       password: '123456',
@@ -54,11 +55,12 @@ export default defineComponent({
 
     const handleSubmit = async () => {
       await signup(formData.value)
-      console.log(error.value)
-      // router.push({ name: 'Profile' })
+      if (!error.value) {
+        router.push({ name: 'Profile' })
+      }
     }
 
-    return { formData, handleSubmit, error, signup, isPending }
+    return { formData, handleSubmit, error, notification, signup, isPending }
   }
 })
 </script>

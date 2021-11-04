@@ -1,6 +1,6 @@
 <template>
   <div class="load">
-    <div v-for="i in 6" :key="i"></div>
+    <div v-for="i in 3" :key="i"></div>
   </div>
 </template>
 
@@ -27,15 +27,17 @@ export default defineComponent({
   left: 8px;
   width: 24px;
   height: 24px;
-  border: 1px dashed black;
-  border-radius: 50%;
+  // border: 1px dashed black;
+  border-radius: 10%;
   background: white;
-  animation: load 1.5s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+  animation: load 1s cubic-bezier(0, 0.5, 0.5, 1) infinite;
 }
 $pos: 0;
 $delay: 0;
-$step: 12;
-@for $i from 1 through 6 {
+$step: 18;
+@for $i from 1 through 3 {
+  $p: $i % 2;
+
   .load div:nth-child(#{$i}) {
     left: #{$pos}px;
     animation-delay: #{$delay/100 * -1}s;
@@ -46,17 +48,19 @@ $step: 12;
 
 @keyframes load {
   0% {
-    top: 8px;
-    background: red;
+    background: darkred;
+    //border-style: double;
   }
 
   50% {
-    bottom: 8px;
-    background: darkred;
+    background: white;
+    width: 50%;
+    height: 50%;
+    //border: 2px dashed black;
   }
   100% {
-    top: 0px;
-    background: white;
+    background: darkred;
+    //border-style: double;
   }
 }
 </style>

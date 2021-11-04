@@ -2,15 +2,20 @@ import { Notification, NotificationType } from '@/types/Notification'
 
 const useUtils = (): {
   delay: typeof delay
-  setError: typeof setError
+  setNotification: typeof setNotification
   resetNotification: typeof resetNotification
 } => {
-  const delay = (amount = 2000) => {
-    console.log(`Delay de ${amount / 1000} segundos para testes!`)
+  const delay = (amount = 2000, msg = false) => {
+    if (msg) {
+      console.log(`Delay de ${amount / 1000} segundos para testes!`)
+    }
     return new Promise((resolve) => setTimeout(resolve, amount))
   }
 
-  const setError = (type: NotificationType, msg: string): Notification => {
+  const setNotification = (
+    type: NotificationType,
+    msg: string
+  ): Notification => {
     const res: Notification = {
       type: type,
       msg: msg
@@ -24,7 +29,7 @@ const useUtils = (): {
     }
   }
 
-  return { delay, setError, resetNotification }
+  return { delay, setNotification, resetNotification }
 }
 
 export default useUtils
