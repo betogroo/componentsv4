@@ -24,8 +24,8 @@
 </template>
 
 <script lang="ts">
-import useLogin from '../composables/useLogin'
 import { defineComponent, ref } from 'vue'
+import useLogin from '../composables/useLogin'
 import DefaultNotification from '@/components/layout/notification/DefaultNotification.vue'
 import DefaultLoading from '@/components/layout/loading/DefaultLoading.vue'
 import AuthFormLink from './AuthFormLink.vue'
@@ -39,7 +39,7 @@ export default defineComponent({
     DefaultNotification,
     DefaultLoading
   },
-  setup() {
+  setup(props, { emit }) {
     const { error, notification, isPending, login } = useLogin()
     const formData = ref<Auth>({
       email: 'betogroo@beto.com',
@@ -48,7 +48,7 @@ export default defineComponent({
     const handleSubmit = async (): Promise<void> => {
       await login(formData.value)
       if (!error.value) {
-        console.log('user logged')
+        emit('login')
       }
     }
     return { formData, handleSubmit, error, notification, isPending }

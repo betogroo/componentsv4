@@ -28,7 +28,7 @@ const login = async (formData: Auth): Promise<UserInfo | unknown> => {
     if (!res) {
       throw { code: 'auth/default-error' }
     }
-    await delay(15000, true)
+    await delay(2000, true)
     notification.value = setNotification(
       'success',
       'Logado com sucesso. Aguarde ser redirecionado'

@@ -34,7 +34,7 @@ export default defineComponent({
     DefaultLoading
   },
 
-  setup() {
+  setup(props, { emit }) {
     const { error, notification, isPending, reset } = userResetPassword()
     const formData = ref<Auth>({
       email: 'beto@beto.com',
@@ -43,6 +43,9 @@ export default defineComponent({
 
     const handleSubmit = async () => {
       await reset(formData.value)
+      if (!error.value) {
+        emit('reset')
+      }
     }
 
     return { formData, handleSubmit, error, notification, isPending }

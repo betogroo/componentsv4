@@ -43,7 +43,7 @@ export default defineComponent({
     DefaultLoading
   },
 
-  setup() {
+  setup(props, { emit }) {
     const router = useRouter()
     const { error, notification, signup, isPending } = useSignup()
     const formData = ref<Auth>({
@@ -56,7 +56,7 @@ export default defineComponent({
     const handleSubmit = async () => {
       await signup(formData.value)
       if (!error.value) {
-        router.push({ name: 'Profile' })
+        emit('signup')
       }
     }
 

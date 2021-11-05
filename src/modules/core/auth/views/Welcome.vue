@@ -1,17 +1,16 @@
 <template>
   <div>
     <h1>Forms</h1>
-    <LoginForm v-if="mode === 'login'" />
-    <SignupForm v-if="mode === 'signup'" />
-    <ResetPasswordForm v-if="mode === 'reset'" />
+    <LoginForm @login="gotoPage('Profile')" v-if="mode === 'login'" />
+    <SignupForm @signup="gotoPage('Profile')" v-if="mode === 'signup'" />
+    <ResetPasswordForm @reset="gotoPage('Welcome')" v-if="mode === 'reset'" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import LoginForm from '../components/LoginForm.vue'
-import SignupForm from '../components/SignupForm.vue'
-import ResetPasswordForm from '../components/ResetPasswordForm.vue'
+import { useRouter } from 'vue-router'
+import { LoginForm, SignupForm, ResetPasswordForm } from '../components/'
 
 export default defineComponent({
   name: 'Welcome',
@@ -30,7 +29,11 @@ export default defineComponent({
   },
 
   setup() {
-    return {}
+    const router = useRouter()
+    const gotoPage = (name: string) => {
+      router.push({ name })
+    }
+    return { gotoPage }
   }
 })
 </script>
