@@ -10,7 +10,9 @@ import {
   signOut,
   onAuthStateChanged,
   UserInfo,
-  UserCredential
+  User,
+  UserCredential,
+  NextOrObserver
 } from 'firebase/auth'
 
 initializeApp({
@@ -32,5 +34,7 @@ export {
   signOut,
   onAuthStateChanged,
   UserInfo,
-  UserCredential
+  User,
+  UserCredential,
+  NextOrObserver
 }

@@ -3,13 +3,17 @@
     <div class="menu">
       {{ isPending }}
       {{ notification }}
+
       <router-link to="/">Home</router-link> |
       <router-link to="/welcome">Welcome</router-link> |
       <router-link to="/about">About</router-link>
     </div>
     <div class="profile">
-      <h5>usuario</h5>
-      <button @click.prevent="logout">Sair</button>
+      <h5>{{ user ? user.displayName : '' }}</h5>
+      <button v-if="user" @click.prevent="logout">Sair</button>
+      <button v-else @click.prevent="$router.push({ name: 'Welcome' })">
+        Login
+      </button>
       {{ error }}
     </div>
   </div>
@@ -17,10 +21,12 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import getUser from '@/modules/core/auth/composables/getUser'
 import useLogout from '@/modules/core/auth/composables/useLogout'
 
 export default defineComponent({
   setup() {
+    const { user } = getUser()
     const { error, logout: logoutSystem, isPending, notification } = useLogout()
     const logout = async () => {
       await logoutSystem()
@@ -32,7 +38,8 @@ export default defineComponent({
       logout,
       error,
       isPending,
-      notification
+      notification,
+      user
     }
   }
 })
