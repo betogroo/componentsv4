@@ -27,7 +27,6 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { useRouter } from 'vue-router'
 import useSignup from '../composables/useSignup'
 import DefaultNotification from '@/components/layout/notification/DefaultNotification.vue'
 import DefaultLoading from '@/components/layout/loading/DefaultLoading.vue'
@@ -44,7 +43,6 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    const router = useRouter()
     const { error, notification, signup, isPending } = useSignup()
     const formData = ref<Auth>({
       email: 'betogarcia@gmail.com',

@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Forms</h1>
-    <LoginForm @login="gotoPage('Profile')" v-if="mode === 'login'" />
+    <LoginForm @login="gotoPage('Home')" v-if="mode === 'login'" />
     <SignupForm @signup="gotoPage('Profile')" v-if="mode === 'signup'" />
     <ResetPasswordForm @reset="gotoPage('Welcome')" v-if="mode === 'reset'" />
   </div>

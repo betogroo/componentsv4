@@ -1,9 +1,6 @@
 <template>
   <div class="nav">
     <div class="menu">
-      {{ isPending }}
-      {{ notification }}
-
       <router-link to="/">Home</router-link> |
       <router-link to="/welcome">Welcome</router-link> |
       <router-link to="/about">About</router-link>
@@ -21,17 +18,19 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { useRouter } from 'vue-router'
 import getUser from '@/modules/core/auth/composables/getUser'
 import useLogout from '@/modules/core/auth/composables/useLogout'
 
 export default defineComponent({
   setup() {
+    const router = useRouter()
     const { user } = getUser()
     const { error, logout: logoutSystem, isPending, notification } = useLogout()
     const logout = async () => {
       await logoutSystem()
       if (!error.value) {
-        console.log('deslogou')
+        router.push({ name: 'Welcome' })
       }
     }
     return {

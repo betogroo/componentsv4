@@ -1,12 +1,11 @@
 import { ref } from 'vue'
 import useAuthErrors from './useAuthErrors'
 import useUtils from '@/composables/useUtils'
-import { getAuth, signOut, UserInfo } from '@/plugins/firebase'
+import { getAuth, signOut } from '@/plugins/firebase'
 import { Notification } from '@/types/Notification'
-import { Auth } from '../types/Auth'
 
 const { searchError } = useAuthErrors()
-const { delay, setNotification, resetNotification } = useUtils()
+const { setNotification, resetNotification } = useUtils()
 
 const error = ref<boolean | null>(null)
 const notification = ref<Notification>(resetNotification())
