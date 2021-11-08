@@ -10,3 +10,4 @@ export default defineComponent({
   name: 'AppBtn'
 })
 </script>
+<style lang="scss" scoped></style>

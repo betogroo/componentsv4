@@ -3,7 +3,7 @@
     {{ error }}
     <form @submit.prevent="handleSubmit">
       <input v-model="formData.email" type="email" />
-      <button type="submit">Redefinir</button>
+      <AppBtn type="submit">Redefinir</AppBtn>
       <AuthFormLink
         text="Ainda não em cadastro?"
         textLink="Cadastre-se"

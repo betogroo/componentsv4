@@ -16,7 +16,7 @@
 import { defineComponent, ref } from 'vue'
 import UserList from '@/modules/core/home/components/UserList.vue'
 import JobList from '@/modules/core/home/components/JobList.vue'
-import AppBtn from '@/components/app/AppBtn.vue'
+// import AppBtn from '@/components/app/AppBtn.vue'
 import User from '../types/User'
 import Job from '../types/Job'
 import OrderTerm from '@/modules/core/home/types/OrderTerm'
@@ -26,8 +26,7 @@ export default defineComponent({
 
   components: {
     UserList,
-    JobList,
-    AppBtn
+    JobList
   },
 
   setup() {

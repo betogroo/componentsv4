@@ -7,10 +7,10 @@
     </div>
     <div class="profile">
       <h5>{{ user ? user.displayName : '' }}</h5>
-      <button v-if="user" @click.prevent="logout">Sair</button>
-      <button v-else @click.prevent="$router.push({ name: 'Welcome' })">
+      <AppBtn v-if="user" @click.prevent="logout">Sair</AppBtn>
+      <AppBtn v-else @click.prevent="$router.push({ name: 'Welcome' })">
         Login
-      </button>
+      </AppBtn>
       {{ error }}
     </div>
   </div>

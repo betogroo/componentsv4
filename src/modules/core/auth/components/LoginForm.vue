@@ -4,7 +4,7 @@
     <form @submit.prevent="handleSubmit">
       <input type="email" v-model="formData.email" />
       <input type="password" v-model="formData.password" />
-      <button type="submit">Entrar</button>
+      <AppBtn>Entrar</AppBtn>
       <AuthFormLink
         text="Ainda não em cadastro?"
         textLink="Cadastre-se"

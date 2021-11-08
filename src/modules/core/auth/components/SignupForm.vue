@@ -6,7 +6,7 @@
       <input v-model="formData.email" type="email" />
       <input v-model="formData.password" type="password" />
       <input v-model="formData.passwordConfirm" type="password" />
-      <button type="submit">Cadastrar</button>
+      <AppBtn>Cadastrar</AppBtn>
       <AuthFormLink
         text="Já é cadastrado?"
         textLink="Faça login"

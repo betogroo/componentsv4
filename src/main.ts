@@ -5,11 +5,34 @@ import store from './store'
 import './registerServiceWorker'
 import { onAuthStateChanged, getAuth } from '@/plugins/firebase'
 
+import upperFirst from 'lodash/upperFirst'
+import camelCase from 'lodash/camelCase'
+const requireComponent = require.context(
+  './components/app',
+  false,
+  /App[A-Z]\w+\.(vue|js)$/
+)
+
 let app: RendererElement
 const auth = getAuth()
 
 onAuthStateChanged(auth, () => {
   if (!app) {
-    app = createApp(App).use(store).use(router).mount('#app')
+    app = createApp(App)
+    requireComponent.keys().forEach((fileName: any) => {
+      const componentConfig = requireComponent(fileName)
+      const componentName = upperFirst(
+        camelCase(
+          fileName
+            .split('/')
+            .pop()
+            .replace(/\.\w+$/, '')
+        )
+      )
+
+      app.component(componentName, componentConfig.default || componentConfig)
+    })
+
+    app.use(store).use(router).mount('#app')
   }
 })
