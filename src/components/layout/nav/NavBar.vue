@@ -6,7 +6,9 @@
       <router-link to="/about">About</router-link>
     </div>
     <div class="profile">
-      <h5>{{ user ? user.displayName : '' }}</h5>
+      <AppBtn @click="$router.push({ name: 'Profile' })">{{
+        user ? user.displayName : ''
+      }}</AppBtn>
       <AppBtn v-if="user" @click.prevent="logout">Sair</AppBtn>
       <AppBtn v-else @click.prevent="$router.push({ name: 'Welcome' })">
         Login
