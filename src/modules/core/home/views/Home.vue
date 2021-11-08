@@ -1,5 +1,9 @@
 <template>
   <div class="home">
+    <h3>Use Mouse {{ `X:${x}, Y:${y}` }}</h3>
+    <h3>Use Window size {{ `(${width}, ${height})` }}</h3>
+    <h3>Use Breakpoints Vuetify {{ breakpoints.greater('xs') }}</h3>
+    <h1 v-if="alertWindow">Alert</h1>
     <h2>User List</h2>
     <AppBtn @click="handleClick('uid')">Sort by UID</AppBtn>
     <AppBtn @click="handleClick('displayName')">Sort by Display Name</AppBtn>
@@ -13,10 +17,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 import UserList from '@/modules/core/home/components/UserList.vue'
 import JobList from '@/modules/core/home/components/JobList.vue'
-// import AppBtn from '@/components/app/AppBtn.vue'
+import {
+  useMouse,
+  useWindowSize,
+  useBreakpoints,
+  breakpointsVuetify
+} from '@vueuse/core'
 import User from '../types/User'
 import Job from '../types/Job'
 import OrderTerm from '@/modules/core/home/types/OrderTerm'
@@ -30,6 +39,25 @@ export default defineComponent({
   },
 
   setup() {
+    const { x, y } = useMouse()
+    const { width, height } = useWindowSize()
+    const alertWindow = ref(false)
+    const breakpoints = useBreakpoints(breakpointsVuetify)
+    watch(
+      () => [x.value, y.value],
+      () => {
+        if (
+          x.value === 0 ||
+          x.value > width.value - 5 ||
+          y.value === 0 ||
+          y.value > height.value - 2
+        ) {
+          alertWindow.value = true
+        } else {
+          alertWindow.value = false
+        }
+      }
+    )
     const users = ref<User[]>([
       {
         displayName: 'Beto',
@@ -64,7 +92,18 @@ export default defineComponent({
       order.value = term
     }
 
-    return { users, jobs, handleClick, order }
+    return {
+      users,
+      jobs,
+      handleClick,
+      order,
+      x,
+      y,
+      width,
+      height,
+      alertWindow,
+      breakpoints
+    }
   }
 })
 </script>
