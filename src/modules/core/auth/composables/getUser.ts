@@ -1,20 +1,20 @@
 import { ref } from 'vue'
-import { UserInfo, onAuthStateChanged, getAuth } from '@/plugins/firebase'
+import { onAuthStateChanged, getAuth } from '@/plugins/firebase'
 const auth = getAuth()
-const user = ref<UserInfo | null>(auth.currentUser)
+const user = ref(auth.currentUser)
 
 onAuthStateChanged(auth, (_user) => {
   if (_user) {
-    console.log('_user ->', _user)
     user.value = _user
+  } else {
+    user.value = null
   }
 })
 
 const getUser = (): {
   user: typeof user
-  auth: typeof auth
 } => {
-  return { user, auth }
+  return { user }
 }
 
 export default getUser
