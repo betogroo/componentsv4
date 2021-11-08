@@ -2,7 +2,6 @@
   <div class="nav">
     <div class="menu">
       <router-link to="/">Home</router-link> |
-      <router-link to="/welcome">Welcome</router-link> |
       <router-link to="/about">About</router-link>
     </div>
     <div class="profile">
@@ -13,7 +12,6 @@
       <AppBtn v-else @click.prevent="$router.push({ name: 'Welcome' })">
         Login
       </AppBtn>
-      {{ error }}
     </div>
   </div>
 </template>
