@@ -1,13 +1,10 @@
 import { ref } from 'vue'
 import useAuthErrors from './useAuthErrors'
 import useUtils from '@/composables/useUtils'
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  UserInfo
-} from '@/plugins/firebase'
+import { getAuth, signInWithEmailAndPassword } from '@/plugins/firebase'
 import { Notification } from '@/types/Notification'
 import { Auth } from '../types/Auth'
+import { FirebaseError } from '@firebase/util'
 
 const { searchError } = useAuthErrors()
 const { delay, setNotification, resetNotification } = useUtils()
@@ -16,7 +13,7 @@ const error = ref<boolean>(false)
 const notification = ref<Notification>(resetNotification())
 const isPending = ref(false)
 
-const login = async (formData: Auth): Promise<UserInfo | unknown> => {
+const login = async (formData: Auth) => {
   isPending.value = true
   error.value = false
   notification.value = resetNotification()
@@ -26,7 +23,7 @@ const login = async (formData: Auth): Promise<UserInfo | unknown> => {
   try {
     const res = await signInWithEmailAndPassword(auth, email, password)
     if (!res) {
-      throw { code: 'auth/default-error' }
+      throw new FirebaseError('auth/default-error', 'Erro Default')
     }
     await delay(2000, true)
     notification.value = setNotification(
@@ -37,9 +34,10 @@ const login = async (formData: Auth): Promise<UserInfo | unknown> => {
     await delay(2000)
     notification.value = resetNotification()
     return res.user
-  } catch (err: any) {
+  } catch (e) {
+    const err: FirebaseError = e
     error.value = true
-    console.log(err.code)
+    console.log(err.name)
     isPending.value = false
     notification.value = setNotification('error', searchError(err.code))
     await delay(2000)

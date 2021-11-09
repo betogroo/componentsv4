@@ -3,6 +3,7 @@ import useAuthErrors from './useAuthErrors'
 import useUtils from '@/composables/useUtils'
 import { getAuth, signOut } from '@/plugins/firebase'
 import { Notification } from '@/types/Notification'
+import { FirebaseError } from '@firebase/util'
 
 const { searchError } = useAuthErrors()
 const { setNotification, resetNotification } = useUtils()
@@ -11,7 +12,7 @@ const error = ref<boolean | null>(null)
 const notification = ref<Notification>(resetNotification())
 const isPending = ref(false)
 
-const logout = async (): Promise<void> => {
+const logout = async () => {
   isPending.value = true
   error.value = null
   notification.value = resetNotification()
@@ -20,9 +21,10 @@ const logout = async (): Promise<void> => {
     await signOut(auth)
     notification.value = setNotification('success', 'logou mano')
     error.value = false
-  } catch (err: any) {
+  } catch (e) {
+    const err: FirebaseError = e
     console.log(err.code)
-    error.value = err.code
+    error.value = true
     notification.value = setNotification('error', searchError(err.code))
   }
 }

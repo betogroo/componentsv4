@@ -4,6 +4,7 @@ import useUtils from '@/composables/useUtils'
 import { getAuth, sendPasswordResetEmail } from '@/plugins/firebase'
 import { Notification } from '@/types/Notification'
 import { Auth } from '../types/Auth'
+import { FirebaseError } from '@firebase/util'
 
 const { searchError } = useAuthErrors()
 const { delay, setNotification, resetNotification } = useUtils()
@@ -30,8 +31,8 @@ const reset = async (formData: Auth): Promise<void> => {
     await delay(2000)
     notification.value = resetNotification()
     error.value = false
-  } catch (err: any) {
-    console.log(err.code)
+  } catch (e) {
+    const err: FirebaseError = e
     isPending.value = false
     notification.value = setNotification('error', searchError(err.code))
     await delay(2000)

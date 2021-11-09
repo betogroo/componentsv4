@@ -8,11 +8,7 @@ import {
   sendEmailVerification,
   sendPasswordResetEmail,
   signOut,
-  onAuthStateChanged,
-  UserInfo,
-  User,
-  UserCredential,
-  NextOrObserver
+  onAuthStateChanged
 } from 'firebase/auth'
 
 initializeApp({
@@ -32,9 +28,5 @@ export {
   sendEmailVerification,
   sendPasswordResetEmail,
   signOut,
-  onAuthStateChanged,
-  UserInfo,
-  User,
-  UserCredential,
-  NextOrObserver
+  onAuthStateChanged
 }

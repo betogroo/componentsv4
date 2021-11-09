@@ -1,25 +1,27 @@
-<script setup lang="ts">
-// script setup template
-// compile but not lint
-
-import { defineProps, withDefaults } from 'vue'
-
-interface Props {
-  type?: string
-  text?: string
-  // isActive?: boolean
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  type: 'primary',
-  text: ''
-  // isActive: false
-})
-</script>
-
 <template>
   <div :class="type">{{ text }}</div>
 </template>
+
+<script lang="ts">
+import { defineComponent, PropType } from 'vue'
+import { NotificationType } from '@/types/Notification'
+
+export default defineComponent({
+  name: 'DefaultNotification',
+
+  props: {
+    type: {
+      type: String as PropType<NotificationType>,
+      default: ''
+    },
+    text: {
+      type: String as PropType<string>,
+      default: ''
+    }
+  }
+})
+</script>
+
 <style lang="scss" scoped>
 .error {
   color: red;

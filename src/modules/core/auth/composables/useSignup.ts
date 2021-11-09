@@ -4,11 +4,11 @@ import useUtils from '@/composables/useUtils'
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  updateProfile,
-  UserInfo
+  updateProfile
 } from '@/plugins/firebase'
 import { Notification } from '@/types/Notification'
 import { Auth } from '../types/Auth'
+import { FirebaseError } from '@firebase/util'
 const { setNotification, delay, resetNotification } = useUtils()
 const { searchError } = useAuthErrors()
 
@@ -16,7 +16,7 @@ const error = ref<boolean | null>(null)
 const notification = ref<Notification>(resetNotification())
 const isPending = ref(false)
 
-const signup = async (formData: Auth): Promise<UserInfo | unknown> => {
+const signup = async (formData: Auth) => {
   isPending.value = true
   error.value = null
   notification.value = resetNotification()
@@ -26,7 +26,7 @@ const signup = async (formData: Auth): Promise<UserInfo | unknown> => {
     const res = await createUserWithEmailAndPassword(auth, email, password)
 
     if (!res) {
-      throw { code: 'auth/default-error' }
+      throw new FirebaseError('auth/default-error', 'Default error')
     }
     await updateProfile(res.user, { displayName })
     isPending.value = false
@@ -38,7 +38,8 @@ const signup = async (formData: Auth): Promise<UserInfo | unknown> => {
     notification.value = resetNotification()
     error.value = false
     return res.user
-  } catch (err: any) {
+  } catch (e) {
+    const err: FirebaseError = e
     console.log(err.code)
     isPending.value = false
     notification.value = setNotification('error', searchError(err.code))

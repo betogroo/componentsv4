@@ -19,6 +19,7 @@ const auth = getAuth()
 onAuthStateChanged(auth, () => {
   if (!app) {
     app = createApp(App)
+    // eslint-disable-next-line
     requireComponent.keys().forEach((fileName: any) => {
       const componentConfig = requireComponent(fileName)
       const componentName = upperFirst(
