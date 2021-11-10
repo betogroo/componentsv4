@@ -20,11 +20,11 @@ const logout = async () => {
     await signOut(auth)
     notification.value = setNotification('success', 'logou mano')
     error.value = false
-  } catch (e) {
-    const err: FirebaseError = e
-    console.log(err.code)
+  } catch (err) {
+    const e = err as FirebaseError
+    console.log(e.code)
     error.value = true
-    notification.value = setNotification('error', authError(err.code))
+    notification.value = setNotification('error', authError(e.code))
   }
 }
 

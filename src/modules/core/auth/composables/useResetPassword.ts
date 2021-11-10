@@ -34,13 +34,13 @@ const reset = async (formData: Auth): Promise<void> => {
     await delay(2000)
     notification.value = resetNotification()
     error.value = false
-  } catch (e) {
-    const err: FirebaseError = e
+  } catch (err) {
+    const e = err as FirebaseError
     isPending.value = false
-    notification.value = setNotification('error', authError(err.code))
+    notification.value = setNotification('error', authError(e.code))
     await delay(2000)
     error.value = true
-    console.log(err.code)
+    console.log(e.code)
     notification.value = resetNotification()
   }
 }

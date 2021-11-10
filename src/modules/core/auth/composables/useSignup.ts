@@ -38,11 +38,11 @@ const signup = async (formData: Auth) => {
     notification.value = resetNotification()
     error.value = false
     return res.user
-  } catch (e) {
-    const err: FirebaseError = e
-    console.log(err.code)
+  } catch (err) {
+    const e = err as FirebaseError
+    console.log(e.code)
     isPending.value = false
-    notification.value = setNotification('error', authError(err.code))
+    notification.value = setNotification('error', authError(e.code))
     await delay(2000)
     error.value = true
     notification.value = resetNotification()
