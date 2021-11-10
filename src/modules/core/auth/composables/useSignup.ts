@@ -4,13 +4,13 @@ import useUtils from '@/composables/useUtils'
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  updateProfile
+  updateProfile,
+  FirebaseError
 } from '@/plugins/firebase'
 import { Notification } from '@/types/Notification'
 import { Auth } from '../types/Auth'
-import { FirebaseError } from '@firebase/util'
 const { setNotification, delay, resetNotification } = useUtils()
-const { searchError } = useAuthErrors()
+const { authError } = useAuthErrors()
 
 const error = ref<boolean | null>(null)
 const notification = ref<Notification>(resetNotification())
@@ -42,7 +42,7 @@ const signup = async (formData: Auth) => {
     const err: FirebaseError = e
     console.log(err.code)
     isPending.value = false
-    notification.value = setNotification('error', searchError(err.code))
+    notification.value = setNotification('error', authError(err.code))
     await delay(2000)
     error.value = true
     notification.value = resetNotification()

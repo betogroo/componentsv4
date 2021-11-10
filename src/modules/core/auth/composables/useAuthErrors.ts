@@ -1,4 +1,4 @@
-const searchError = (errorCode: string): string => {
+const authError = (errorCode: string): string => {
   switch (errorCode) {
     case 'auth/invalid-email':
       return 'O e-mail é inválido.'
@@ -33,8 +33,8 @@ const searchError = (errorCode: string): string => {
   }
 }
 
-const useAuthErrors = (): { searchError: typeof searchError } => {
-  return { searchError }
+const useAuthErrors = (): { authError: typeof authError } => {
+  return { authError }
 }
 
 export default useAuthErrors

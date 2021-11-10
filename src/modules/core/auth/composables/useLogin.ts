@@ -1,12 +1,15 @@
 import { ref } from 'vue'
 import useAuthErrors from './useAuthErrors'
 import useUtils from '@/composables/useUtils'
-import { getAuth, signInWithEmailAndPassword } from '@/plugins/firebase'
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  FirebaseError
+} from '@/plugins/firebase'
 import { Notification } from '@/types/Notification'
 import { Auth } from '../types/Auth'
-import { FirebaseError } from '@firebase/util'
 
-const { searchError } = useAuthErrors()
+const { authError } = useAuthErrors()
 const { delay, setNotification, resetNotification } = useUtils()
 
 const error = ref<boolean>(false)
@@ -37,9 +40,9 @@ const login = async (formData: Auth) => {
   } catch (e) {
     const err: FirebaseError = e
     error.value = true
-    console.log(err.name)
+    console.log(err.code)
     isPending.value = false
-    notification.value = setNotification('error', searchError(err.code))
+    notification.value = setNotification('error', authError(err.code))
     await delay(2000)
     notification.value = resetNotification()
   }

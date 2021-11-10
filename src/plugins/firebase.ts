@@ -11,6 +11,8 @@ import {
   onAuthStateChanged
 } from 'firebase/auth'
 
+import { FirebaseError } from '@firebase/util'
+
 initializeApp({
   apiKey: process.env.VUE_APP_API_KEY,
   authDomain: process.env.VUE_APP_AUTH_DOMAIN,
@@ -28,5 +30,6 @@ export {
   sendEmailVerification,
   sendPasswordResetEmail,
   signOut,
-  onAuthStateChanged
+  onAuthStateChanged,
+  FirebaseError
 }

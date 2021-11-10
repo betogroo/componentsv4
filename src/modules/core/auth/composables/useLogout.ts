@@ -1,11 +1,10 @@
 import { ref } from 'vue'
 import useAuthErrors from './useAuthErrors'
 import useUtils from '@/composables/useUtils'
-import { getAuth, signOut } from '@/plugins/firebase'
+import { getAuth, signOut, FirebaseError } from '@/plugins/firebase'
 import { Notification } from '@/types/Notification'
-import { FirebaseError } from '@firebase/util'
 
-const { searchError } = useAuthErrors()
+const { authError } = useAuthErrors()
 const { setNotification, resetNotification } = useUtils()
 
 const error = ref<boolean | null>(null)
@@ -25,7 +24,7 @@ const logout = async () => {
     const err: FirebaseError = e
     console.log(err.code)
     error.value = true
-    notification.value = setNotification('error', searchError(err.code))
+    notification.value = setNotification('error', authError(err.code))
   }
 }
 
