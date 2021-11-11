@@ -1,10 +1,11 @@
 <template>
-  <div>
-    {{ error }}
+  <div class="form">
     <form @submit.prevent="handleSubmit">
       <input type="email" v-model="formData.email" />
       <input type="password" v-model="formData.password" />
       <AppBtn>Entrar</AppBtn>
+      <hr />
+      <AppBtn @click="handleClick" type="button">Entrar com o Google</AppBtn>
       <AuthFormLink
         text="Ainda não em cadastro?"
         textLink="Cadastre-se"
@@ -40,7 +41,8 @@ export default defineComponent({
     DefaultLoading
   },
   setup(props, { emit }) {
-    const { error, notification, isPending, login } = useLogin()
+    const { error, notification, isPending, login, loginWithGoogle } =
+      useLogin()
     const formData = ref<Auth>({
       email: 'betogroo@beto.com',
       password: '123456'
@@ -51,7 +53,33 @@ export default defineComponent({
         emit('login')
       }
     }
-    return { formData, handleSubmit, error, notification, isPending }
+
+    const handleClick = async () => {
+      await loginWithGoogle()
+      if (!error.value) {
+        emit('login')
+      }
+    }
+    return {
+      formData,
+      handleSubmit,
+      handleClick,
+      error,
+      notification,
+      isPending
+    }
   }
 })
 </script>
+
+<style lang="scss" scoped>
+.form {
+}
+form {
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+}
+</style>
